@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Eight anonymised SIA Door Supervisors across West London and South Bucks, five with CCTV. Pick officers and request full CVs from Syntech Recruitment.">
+<meta property="og:title" content="West London SIA Bench | Syntech Recruitment">
+<meta property="og:description" content="Eight SIA officers ready to interview. Five dual-licensed with CCTV. Flat fee per hire.">
+<title>West London SIA Bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a deployment board. Hero states the bench, a filter rail sets the shift needs,
+   officer cards fill the board, a request tray collects picks and writes the brief. Dark-first, Syntech red. */
+:root {
+  --bg: #0d0d0f;
+  --panel: #16161a;
+  --panel-2: #1d1d22;
+  --line: #2b2a30;
+  --fg: #f3f1f0;
+  --muted: #a3a0a6;
+  --red: #e8302a;
+  --red-soft: rgba(232, 48, 42, 0.14);
+  --ok: #3fb37f;
+  --ok-soft: rgba(63, 179, 127, 0.14);
+  --on-red: #ffffff;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f5f4; --panel: #ffffff; --panel-2: #f0eeed; --line: #dedbd9;
+    --fg: #121114; --muted: #5e5a62; --red: #d42620; --red-soft: rgba(212, 38, 32, 0.09);
+    --ok: #1f8a5a; --ok-soft: rgba(31, 138, 90, 0.1); --on-red: #ffffff; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f6f5f4; --panel: #ffffff; --panel-2: #f0eeed; --line: #dedbd9;
+  --fg: #121114; --muted: #5e5a62; --red: #d42620; --red-soft: rgba(212, 38, 32, 0.09);
+  --ok: #1f8a5a; --ok-soft: rgba(31, 138, 90, 0.1); --on-red: #ffffff; color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 0 140px; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* Masthead */
+.mast { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.brand { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: 0.04em; }
+.brand span { color: var(--red); font-weight: 600; font-size: 15px; letter-spacing: 0.14em; margin-left: 6px; }
+.mast .contact { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; padding-block: 48px 36px; align-items: end; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(42px, 6.4vw, 78px); line-height: 0.95; letter-spacing: -0.005em; margin: 12px 0 18px; text-wrap: balance; text-transform: uppercase; }
+h1 em { font-style: normal; color: var(--red); }
+.lede { color: var(--muted); max-width: 56ch; margin: 0; font-size: 16px; }
+.tally { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
+.tally div { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.tally div:nth-child(odd) { border-right: 1px solid var(--line); }
+.tally div:nth-last-child(-n+2) { border-bottom: 0; }
+.tally b { display: block; font-family: var(--display); font-size: 44px; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tally b.red { color: var(--red); }
+.tally span { font-size: 13px; color: var(--muted); }
+
+/* Board */
+.board { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 28px; align-items: start; }
+.rail { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 18px; }
+.rail h2 { font-family: var(--display); font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--muted); font-weight: 600; }
+.filters { display: grid; gap: 8px; }
+.chip { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 10px 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); border-radius: 4px; font: 500 14px var(--body); cursor: pointer; text-align: left; }
+.chip .n { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.chip[aria-pressed="true"] { border-color: var(--red); background: var(--red-soft); }
+.chip[aria-pressed="true"] .n { color: var(--red); }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+.clear { background: none; border: 0; color: var(--muted); font: 500 13px var(--body); text-decoration: underline; cursor: pointer; padding: 0; justify-self: start; }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.empty { grid-column: 1 / -1; border: 1px dashed var(--line); border-radius: 4px; padding: 28px; color: var(--muted); text-align: center; }
+
+/* Officer card */
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; display: flex; flex-direction: column; min-width: 0; transition: border-color 0.15s; }
+.card.picked { border-color: var(--red); box-shadow: inset 0 3px 0 var(--red); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 18px 18px 0; }
+.ref { font-family: var(--mono); font-size: 12.5px; color: var(--red); letter-spacing: 0.06em; }
+.role { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.05; margin: 4px 0 0; text-transform: uppercase; text-wrap: balance; }
+.area { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.pick { flex: none; border: 1px solid var(--line); background: var(--panel-2); color: var(--fg); border-radius: 4px; padding: 8px 12px; font: 600 13px var(--body); cursor: pointer; white-space: nowrap; }
+.card.picked .pick { background: var(--red); border-color: var(--red); color: var(--on-red); }
+.lic { display: flex; flex-wrap: wrap; gap: 6px; padding: 14px 18px 0; }
+.tag { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; padding: 3px 8px; border-radius: 3px; border: 1px solid var(--line); color: var(--muted); }
+.tag.lic-ds, .tag.lic-cctv { border-color: var(--red); color: var(--fg); }
+.tag.lic-ds::before, .tag.lic-cctv::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--red); border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.tag.now { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 16px 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stats div { padding: 10px 0; }
+.stats div + div { border-left: 1px solid var(--line); padding-left: 14px; }
+.stats b { font-family: var(--display); font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.stats b small { font-size: 16px; color: var(--muted); margin-left: 3px; font-weight: 600; }
+.stats span { display: block; font-size: 12px; color: var(--muted); }
+.points { list-style: none; margin: 0; padding: 14px 18px 0; display: grid; gap: 7px; font-size: 14px; }
+.points li { padding-left: 16px; position: relative; }
+.points li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 2px; background: var(--red); }
+details { margin: 14px 18px 18px; border-top: 1px solid var(--line); padding-top: 10px; margin-top: auto; }
+.card .points { margin-bottom: 14px; }
+summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--muted); list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: " +"; color: var(--red); }
+details[open] summary::after { content: " –"; }
+.history { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.history li { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; font-size: 13.5px; }
+.history time { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.history b { font-weight: 600; }
+.history span { color: var(--muted); }
+
+/* Sections */
+section.band { border-top: 1px solid var(--line); margin-top: 56px; padding-top: 36px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; }
+section.band h2 { font-family: var(--display); text-transform: uppercase; font-size: 34px; line-height: 1; margin: 6px 0 0; text-wrap: balance; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }
+.steps li::before { content: counter(s); font-family: var(--display); font-weight: 700; font-size: 26px; color: var(--red); line-height: 1.1; }
+.steps b { display: block; }
+.steps span { color: var(--muted); font-size: 14px; }
+.fee { display: grid; gap: 10px; }
+.fee p { margin: 0; color: var(--muted); max-width: 60ch; }
+.ladder { display: flex; align-items: flex-end; gap: 6px; height: 86px; margin-top: 8px; }
+.ladder i { flex: 1; background: var(--red-soft); border-top: 3px solid var(--red); }
+.ladder-cap { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+
+/* Tray */
+.tray { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--panel); border-top: 2px solid var(--red); padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px)); }
+.tray-in { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.tray-count { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.tray-meta { font-size: 13px; color: var(--muted); flex: 1; min-width: 180px; }
+.tray-meta b { color: var(--fg); font-weight: 600; }
+.btn { border: 0; background: var(--red); color: var(--on-red); font: 600 14px var(--body); padding: 11px 18px; border-radius: 4px; cursor: pointer; }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+
+/* Request panel */
+.req { margin-top: 56px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; scroll-margin-top: 20px; }
+.req h2 { font-family: var(--display); text-transform: uppercase; font-size: 34px; line-height: 1; margin: 6px 0 12px; }
+form { display: grid; gap: 12px; }
+label { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
+input, select { font: 400 15px var(--body); padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-2); color: var(--fg); width: 100%; }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.out { display: grid; gap: 10px; align-content: start; min-width: 0; }
+textarea { width: 100%; min-height: 250px; resize: vertical; font: 400 13px/1.55 var(--mono); padding: 14px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel-2); color: var(--fg); }
+.send-to { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.send-to b { color: var(--fg); user-select: all; font-weight: 500; }
+.status { font-size: 13px; color: var(--ok); min-height: 1.4em; margin: 0; }
+.inbox { margin-top: 56px; border: 1px solid var(--red); border-radius: 4px; background: var(--panel); padding: 24px; display: grid; gap: 10px; }
+.inbox h2 { font-family: var(--display); text-transform: uppercase; font-size: 34px; line-height: 1; margin: 0; }
+.inbox-scroll { overflow-x: auto; }
+.inbox table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 640px; }
+.inbox th { text-align: left; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.inbox td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.inbox td.mono { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.inbox td small { display: block; color: var(--muted); }
+.status.err { color: var(--red); }
+footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+footer b { color: var(--fg); }
+
+@media (max-width: 900px) {
+  .hero, section.band, .req { grid-template-columns: minmax(0, 1fr); }
+  .board { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  .wrap { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+[hidden]{display:none!important}
+img{max-width:100%}
+body{margin:0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="brand">SYNTECH<span>RECRUITMENT</span></div>
+    <div class="contact">Security recruitment · flat fee · 01276 405 870</div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">SIA officers · M40 &amp; M4 corridor</div>
+      <h1>Eight SIA officers, <em>ready to meet</em> your team</h1>
+      <p class="lede">Door Supervisor licensed, most with CCTV as well, living between London and South Bucks. Each one has had their work history reviewed against five-year vetting checks before reaching this page. Pick the officers that fit your sites and we'll send full CVs.</p>
+    </div>
+    <div class="tally" id="tally"></div>
+  </section>
+
+  <div class="board">
+    <aside class="rail" aria-label="Filters">
+      <h2>What your sites need</h2>
+      <div class="filters" id="filters"></div>
+      <button class="clear" id="clear" type="button">Show all officers</button>
+      <p class="note">Profiles are anonymised. Names, employers and contact details are shared once you request an introduction.</p>
+    </aside>
+    <main class="grid" id="grid" aria-live="polite"></main>
+  </div>
+
+  <section class="band">
+    <div>
+      <div class="eyebrow">How it works</div>
+      <h2>From this page to interviews</h2>
+    </div>
+    <ol class="steps">
+      <li><div><b>Pick the officers that fit</b><span>Filter by licence, driving and supervisory experience, then add them to your request.</span></div></li>
+      <li><div><b>Send us your request</b><span>Tell us the site, headcount and start date. The page writes the message for you.</span></div></li>
+      <li><div><b>Get full CVs</b><span>Rebuilt CVs with every role dated and every gap explained, ready for your own vetting.</span></div></li>
+      <li><div><b>Interview and hire</b><span>We arrange interviews and keep candidates warm through your checks.</span></div></li>
+    </ol>
+  </section>
+
+  <section class="band">
+    <div>
+      <div class="eyebrow">Fees</div>
+      <h2>One flat fee per hire. The more you take, the less each costs.</h2>
+    </div>
+    <div class="fee">
+      <p>No percentage of salary. You agree a fixed fee per officer before anyone starts, and that fee drops as your headcount rises. It suits security and facilities teams staffing several sites or a new contract at once.</p>
+      <div class="ladder" aria-hidden="true"><i style="height:100%"></i><i style="height:84%"></i><i style="height:70%"></i><i style="height:58%"></i><i style="height:48%"></i><i style="height:40%"></i></div>
+      <div class="ladder-cap"><span>1 hire</span><span>Fee per officer as volume grows</span><span>6+ hires</span></div>
+      <p>Ask for the rate card when you send your request.</p>
+    </div>
+  </section>
+
+  <section class="req" id="request">
+    <div>
+      <div class="eyebrow">Request introductions</div>
+      <h2>Your shortlist</h2>
+      <form id="form">
+        <label for="f-company">Company<input id="f-company" name="company" autocomplete="organization" placeholder="Your company"></label>
+        <label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" placeholder="Name and job title"></label>
+        <div class="row2">
+          <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.co.uk"></label>
+          <label for="f-phone">Phone<input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="Best number"></label>
+        </div>
+        <div class="row2">
+          <label for="f-site">Site location<input id="f-site" name="site" placeholder="e.g. Uxbridge"></label>
+          <label for="f-heads">Officers needed<input id="f-heads" name="heads" type="number" min="1" value="2"></label>
+        </div>
+        <div class="row2">
+          <label for="f-start">Start<select id="f-start" name="start"><option>As soon as possible</option><option>Within a month</option><option>In 1–3 months</option><option>Planning ahead</option></select></label>
+          <label for="f-shift">Shift pattern<select id="f-shift" name="shift"><option>Days</option><option>Nights</option><option>Days and nights</option><option>Weekends</option></select></label>
+        </div>
+      </form>
+    </div>
+    <div class="out">
+      <label for="msg">Your message</label>
+      <textarea id="msg" readonly></textarea>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="send" type="button" hidden>Send request</button>
+        <a class="btn" id="mail" href="mailto:stephen@syntechrecruitment.co.uk">Send by email</a>
+        <button class="btn ghost" id="copy" type="button">Copy message</button>
+      </div>
+      <p class="send-to">Send to <b>stephen@syntechrecruitment.co.uk</b> or call <b>01276 405 870</b></p>
+      <p class="status" id="status" role="status"></p>
+    </div>
+  </section>
+
+  <footer>
+    <div><b>Steve Brauner</b>, Director, Syntech Recruitment · Camberley, Surrey</div>
+    <div><a href="https://syntechrecruitment.co.uk" target="_blank" rel="noopener">syntechrecruitment.co.uk</a></div>
+  </footer>
+</div>
+
+<div class="tray" role="region" aria-label="Your request">
+  <div class="tray-in">
+    <div class="tray-count" id="t-count">0</div>
+    <div class="tray-meta" id="t-meta">officers in your request. Add officers from the board.</div>
+    <a class="btn" id="t-go" href="#request">Write request</a>
+  </div>
+</div>
+
+<script>
+const OFFICERS = [
+  { ref: "SEC-01", role: "Security Supervisor", area: "South Bucks", lic: ["DS", "CCTV"], drives: false, sup: true, now: false, years: 19, longest: 6,
+    points: ["Supervises 35+ officers per shift on a national rail infrastructure programme", "Six years as Deputy Security Manager on local-authority contracts", "Former site manager across a courts estate", "Traffic marshal, fire and incident control, control and restraint"],
+    history: [["2020 – now", "Security Supervisor", "National rail infrastructure programme"], ["2014 – 2020", "Deputy Security Manager", "Local-authority security contracts"], ["2011 – 2014", "Operations Supervisor", "Courts estate, London"], ["2009 – 2010", "Area Relief Officer", "Corporate and event contracts"], ["2006 – 2008", "Head Doorman", "Licensed venues"]] },
+  { ref: "SEC-02", role: "Security Officer & Relief Supervisor", area: "West London", lic: ["DS", "CCTV"], drives: false, sup: true, now: true, years: 10, longest: 6,
+    points: ["Six years on one security contract with a facilities services provider", "Ten-year history dated to the day, with employer contacts", "Both licences valid into 2029", "Holds a TEC diploma in aeronautical engineering"],
+    history: [["2020 – 2026", "Security Officer", "Facilities services contract (transferred 2026)"], ["2016 – 2020", "Security Officer / Relief Supervisor", "Security services provider"]] },
+  { ref: "SEC-03", role: "Security Officer & Site Supervisor", area: "West London", lic: ["DS", "CCTV"], drives: false, sup: true, now: true, years: 6, longest: 5,
+    points: ["Five years with one employer at a prime central London office building", "Site Supervisor before moving to a frontline officer role", "Calm with confrontational situations; strong report writing", "DBS check available"],
+    history: [["2021 – 2026", "Site Supervisor, then Security Officer", "Corporate office, central London"], ["2020 – 2021", "Security Officer", "Mixed-use commercial building"], ["2020", "Security Officer", "Local-authority depot"]] },
+  { ref: "SEC-04", role: "Security Officer & Duty Controller", area: "Heathrow corridor", lic: ["DS", "CCTV"], drives: true, sup: true, now: false, years: 7, longest: 7,
+    points: ["Seven years with one employer on a national rail infrastructure programme", "Duty controller: rosters, officer deployment, daily client reporting", "Liaises with Thames Valley Police, the Met and British Transport Police", "Banksman, fire marshal, first aid; standard DBS issued Sep 2026"],
+    history: [["2019 – now", "Security Officer & Duty Controller", "National rail infrastructure programme"], ["2019", "SIA licence training", "Door Supervisor, CCTV, banksman, fire marshal"], ["2014 – 2019", "Ticketing Executive", "Travel sector"]] },
+  { ref: "SEC-05", role: "Security Officer & Door Supervisor", area: "West London", lic: ["DS", "CCTV"], drives: true, sup: false, now: false, years: 16, longest: 8,
+    points: ["University campus security: key holding, CCTV and walking patrols", "Trained agency staff on client requirements", "Weekend door supervision at London venues and events", "Eight years with one retail employer earlier in his career"],
+    history: [["2025 – 2026", "Security Officer", "University campus contract"], ["2024 – now", "Door Supervisor", "Pubs, venues and events"], ["2020 – 2022", "Car park security", "Local authority and private operator"], ["2010 – 2019", "Security Guard", "National retail chains"]] },
+  { ref: "SEC-06", role: "Front-of-House Security", area: "London", lic: ["DS"], drives: true, sup: false, now: false, years: 5, longest: 4,
+    points: ["Luxury residential and five-star hotel sites in central London", "Operates Genetec CCTV, alarm and access-control systems", "Key control, contractor access and evidence preservation", "Level 3 physical intervention and first aid; own vehicle"],
+    history: [["2021 – now", "Security Door Supervisor", "Luxury residential and hotel sites"], ["2024 – 2025", "Retail Security (part-time)", "Luxury retail, Mayfair"], ["2023 – 2024", "Mobile Responder (part-time)", "Alarm response"], ["2018 – 2022", "Duty Management", "Hotels"]] },
+  { ref: "SEC-07", role: "Night Security Supervisor", area: "West London", lic: ["DS"], drives: true, sup: true, now: true, years: 9, longest: 7,
+    points: ["Seven years leading night shifts across two high-profile client sites", "Senior on-site authority for overnight incidents and emergency services", "Tyco, Kantech and Lenel access control; multi-screen CCTV", "Data-centre and airport logistics experience; own vehicle"],
+    history: [["2018 – 2026", "Security Supervisor (nights)", "Two high-profile client sites"], ["2017 – 2018", "Mobile Patrol Officer", "Keyholding and alarm response"], ["2017", "Relief Corporate Officer", "Data-centre client"], ["2016 – 2017", "Security Guard", "Airport logistics zones"]] },
+  { ref: "SEC-08", role: "Street Safety & Event Security", area: "London", lic: ["DS"], drives: false, sup: false, now: true, years: 7, longest: 3,
+    points: ["Three years as a Street Safety Officer for a London business district", "Trained junior officers; safeguarding and crime reporting", "Event security at major London venues", "Plain-clothes surveillance and CCTV experience"],
+    history: [["2023 – 2026", "Street Safety Officer", "Business Improvement District"], ["2022 – 2024", "Event Security (part-time)", "Major London venues"], ["2019 – 2023", "Security Guard (part-time)", "Market site"]] }
+];
+
+const FILTERS = [
+  { id: "both", label: "DS + CCTV licences", test: o => o.lic.includes("CCTV") },
+  { id: "drives", label: "Drives", test: o => o.drives },
+  { id: "sup", label: "Supervisory experience", test: o => o.sup },
+  { id: "now", label: "Available now", test: o => o.now }
+];
+
+const state = { on: new Set(), picked: new Set() };
+try { const saved = JSON.parse(localStorage.getItem("sia-bench-picked") || "[]"); saved.forEach(r => state.picked.add(r)); } catch (e) {}
+const save = () => { try { localStorage.setItem("sia-bench-picked", JSON.stringify([...state.picked])); } catch (e) {} };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function renderTally() {
+  const n = OFFICERS.length;
+  const both = OFFICERS.filter(o => o.lic.includes("CCTV")).length;
+  const now = OFFICERS.filter(o => o.now).length;
+  const yrs = OFFICERS.reduce((a, o) => a + o.years, 0);
+  $("tally").innerHTML =
+    `<div><b>${n}</b><span>SIA Door Supervisors</span></div>` +
+    `<div><b class="red">${both}</b><span>also hold a CCTV licence</span></div>` +
+    `<div><b>${now}</b><span>available to start now</span></div>` +
+    `<div><b>${yrs}</b><span>combined years in security</span></div>`;
+}
+
+function renderFilters() {
+  $("filters").innerHTML = FILTERS.map(f => {
+    const count = OFFICERS.filter(f.test).length;
+    return `<button type="button" class="chip" data-f="${f.id}" aria-pressed="${state.on.has(f.id)}"><span>${f.label}</span><span class="n">${count}</span></button>`;
+  }).join("");
+}
+
+function visible() {
+  return OFFICERS.filter(o => [...state.on].every(id => FILTERS.find(f => f.id === id).test(o)));
+}
+
+function renderGrid() {
+  const list = visible();
+  if (!list.length) { $("grid").innerHTML = `<div class="empty">No officer on the bench matches all of those. Remove a filter, or ask us to search for you.</div>`; return; }
+  $("grid").innerHTML = list.map(o => {
+    const picked = state.picked.has(o.ref);
+    const tags = o.lic.map(l => `<span class="tag lic-${l.toLowerCase()}">SIA ${l === "DS" ? "Door Supervisor" : "CCTV"}</span>`).join("") +
+      (o.drives ? `<span class="tag">Drives</span>` : "") + (o.now ? `<span class="tag now">Available now</span>` : "");
+    return `<article class="card${picked ? " picked" : ""}">
+      <div class="card-top"><div><div class="ref">${o.ref}</div><h3 class="role">${esc(o.role)}</h3><div class="area">${esc(o.area)}</div></div>
+        <button type="button" class="pick" data-ref="${o.ref}" aria-pressed="${picked}">${picked ? "Added" : "Add"}</button></div>
+      <div class="lic">${tags}</div>
+      <div class="stats"><div><b>${o.years}<small>yrs</small></b><span>in security</span></div><div><b>${o.longest}<small>yrs</small></b><span>longest single role</span></div></div>
+      <ul class="points">${o.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      <details><summary>Career outline</summary><ul class="history">${o.history.map(h => `<li><time>${esc(h[0])}</time><div><b>${esc(h[1])}</b><br><span>${esc(h[2])}</span></div></li>`).join("")}</ul></details>
+    </article>`;
+  }).join("");
+}
+
+function renderTray() {
+  const picks = OFFICERS.filter(o => state.picked.has(o.ref));
+  $("t-count").textContent = picks.length;
+  if (!picks.length) { $("t-meta").innerHTML = "officers in your request. Add officers from the board."; }
+  else {
+    const both = picks.filter(o => o.lic.includes("CCTV")).length;
+    const drv = picks.filter(o => o.drives).length;
+    const sup = picks.filter(o => o.sup).length;
+    $("t-meta").innerHTML = `${picks.length === 1 ? "officer" : "officers"}: <b>${picks.map(o => o.ref).join(", ")}</b> · ${both} dual-licensed · ${drv} drive · ${sup} supervisory`;
+  }
+  writeMessage();
+}
+
+function writeMessage() {
+  const picks = OFFICERS.filter(o => state.picked.has(o.ref));
+  const v = id => ($(id).value || "").trim();
+  const lines = [
+    "Hi Steve,",
+    "",
+    `We're looking for ${v("f-heads") || "[number]"} SIA officer${v("f-heads") === "1" ? "" : "s"} for our site in ${v("f-site") || "[location]"}.`,
+    `Start: ${v("f-start")}. Shifts: ${v("f-shift")}.`,
+    "",
+    picks.length ? "Please send full CVs for:" : "Please send me CVs from your current bench.",
+    ...picks.map(o => `- ${o.ref}: ${o.role}, ${o.area} (SIA ${o.lic.join(" + ")})`),
+    "",
+    "Please also send your flat-fee rate card.",
+    "",
+    "Thanks,",
+    v("f-name") || "[Your name]",
+    v("f-company") || "[Company]",
+    [v("f-email"), v("f-phone")].filter(Boolean).join(" | ")
+  ].filter((l, i, a) => !(l === "" && i === a.length - 1));
+  const text = lines.join("\n");
+  $("msg").value = text;
+  $("mail").href = "mailto:stephen@syntechrecruitment.co.uk?subject=" + encodeURIComponent("SIA officer request" + (v("f-company") ? " — " + v("f-company") : "")) + "&body=" + encodeURIComponent(text);
+}
+
+document.addEventListener("click", e => {
+  const chip = e.target.closest(".chip");
+  if (chip) { const id = chip.dataset.f; state.on.has(id) ? state.on.delete(id) : state.on.add(id); renderFilters(); renderGrid(); return; }
+  const pick = e.target.closest(".pick");
+  if (pick) { const r = pick.dataset.ref; state.picked.has(r) ? state.picked.delete(r) : state.picked.add(r); save(); renderGrid(); renderTray(); }
+});
+$("clear").addEventListener("click", () => { state.on.clear(); renderFilters(); renderGrid(); });
+$("form").addEventListener("input", writeMessage);
+$("form").addEventListener("submit", e => e.preventDefault());
+$("copy").addEventListener("click", () => {
+  const text = $("msg").value;
+  const done = () => { $("status").textContent = "Copied. Paste it into an email to stephen@syntechrecruitment.co.uk."; };
+  const fallback = () => { $("msg").focus(); $("msg").select(); $("status").textContent = "Message selected. Copy it with your keyboard."; };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
+});
+
+renderTally(); renderFilters(); renderGrid(); renderTray();
+
+
+/* ---- Form delivery. Paste your Formspree endpoint below (e.g. "https://formspree.io/f/abcdwxyz").
+   Left empty, the page uses the email button only. ---- */
+const FORM_ENDPOINT = "https://formspree.io/f/xkjornpn";
+if (FORM_ENDPOINT) {
+  $("send").hidden = false;
+  $("mail").classList.add("ghost");
+  $("send").addEventListener("click", async () => {
+    const v = id => ($(id).value || "").trim();
+    if (!v("f-company")) { $("status").textContent = "Add your company name so we know who is asking."; $("f-company").focus(); return; }
+    if (!v("f-email") && !v("f-phone")) { $("status").textContent = "Add an email or phone number so we can reply."; $("f-email").focus(); return; }
+    const btn = $("send"); btn.disabled = true; $("status").textContent = "Sending...";
+    const picks = OFFICERS.filter(o => state.picked.has(o.ref)).map(o => o.ref).join(", ") || "None picked";
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ _subject: "SIA officer request: " + v("f-company"), company: v("f-company"), name: v("f-name"), email: v("f-email"), phone: v("f-phone"),
+          site: v("f-site"), officers_needed: v("f-heads"), start: v("f-start"), shifts: v("f-shift"), officers_picked: picks, message: $("msg").value }) });
+      if (!res.ok) throw new Error(res.status);
+      $("status").textContent = "Request sent. Steve will be in touch using the details you gave.";
+    } catch (e) {
+      $("status").textContent = "That didn't send. Use the email button instead, or email stephen@syntechrecruitment.co.uk.";
+    } finally { btn.disabled = false; }
+  });
+}
+</script>
+
+</body>
+</html>
