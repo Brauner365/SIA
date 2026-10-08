@@ -435,15 +435,22 @@ if (FORM_ENDPOINT) {
     if (!v("f-email") && !v("f-phone")) { $("status").textContent = "Add an email or phone number so we can reply."; $("f-email").focus(); return; }
     const btn = $("send"); btn.disabled = true; $("status").textContent = "Sending...";
     const picks = OFFICERS.filter(o => state.picked.has(o.ref)).map(o => o.ref).join(", ") || "None picked";
+    const fields = { _subject: "SIA officer request: " + v("f-company"), company: v("f-company"), name: v("f-name"), email: v("f-email"), phone: v("f-phone"),
+      site: v("f-site"), officers_needed: v("f-heads"), start: v("f-start"), shifts: v("f-shift"), officers_picked: picks, message: $("msg").value };
+    if (v("f-email")) fields._replyto = v("f-email");
     try {
-      const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ _subject: "SIA officer request: " + v("f-company"), company: v("f-company"), name: v("f-name"), email: v("f-email"), phone: v("f-phone"),
-          site: v("f-site"), officers_needed: v("f-heads"), start: v("f-start"), shifts: v("f-shift"), officers_picked: picks, message: $("msg").value }) });
+      const res = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Accept": "application/json", "Content-Type": "application/json" }, body: JSON.stringify(fields) });
       if (!res.ok) throw new Error(res.status);
       $("status").textContent = "Request sent. Steve will be in touch using the details you gave.";
+      btn.disabled = false;
     } catch (e) {
-      $("status").textContent = "That didn't send. Use the email button instead, or email stephen@syntechrecruitment.co.uk.";
-    } finally { btn.disabled = false; }
+      /* Background send refused (e.g. captcha or unconfirmed form): hand over to Formspree's own page instead. */
+      $("status").textContent = "Taking you to a secure page to finish sending your request...";
+      const f = document.createElement("form");
+      f.method = "POST"; f.action = FORM_ENDPOINT; f.style.display = "none";
+      Object.entries(fields).forEach(([k, val]) => { const i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = val; f.appendChild(i); });
+      document.body.appendChild(f); f.submit();
+    }
   });
 }
 </script>
